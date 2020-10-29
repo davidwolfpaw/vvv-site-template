@@ -188,61 +188,60 @@ install_wp() {
   fi
 
   INITIAL_BASE_SETUP=$(get_config_value 'initial_base_setup' "")
-    if [ ! -z "${INITIAL_BASE_SETUP}" ]; then
-      echo " * Installing workflow specific themes and plugins"
-      # install the themes and plugins that we do want
-      noroot wp theme install https://orangeblossommedia.com/obm/tools/genesis.3.3.3.zip --activate
-      noroot wp plugin install genesis-simple-edits
-      noroot wp plugin install https://orangeblossommedia.com/obm/tools/advanced-custom-fields-pro.zip --activate
-      noroot wp plugin install https://orangeblossommedia.com/obm/tools/gravityforms_2.4.21.3.zip --activate
-      echo " * Cleaning default settings and setting up pages/menus"
-      # delete sample post
-      noroot wp post delete "$(noroot wp post list --post_type=post --posts_per_page=1 --post_status=publish --postname="hello-world" --field=ID --format=ids)" --force
-      # delete sample page, and create homepage
-      noroot wp post delete "$(noroot wp post list --post_type=page --posts_per_page=1 --post_status=publish --pagename="sample-page" --field=ID --format=ids)" --force
-      # Add a comma separated list of pages
-      allpages="Home,About,Contact,Blog"
-      # create all of the pages
-      IFS=","
-      for page in $allpages
-      do
-        noroot wp post create --post_type=page --post_status=publish --post_author="$(noroot wp user get $wpuser --field=ID)" --post_title="$(echo $page | sed -e 's/^ *//' -e 's/ *$//')"
-      done
-      # set page as front page
-      noroot wp option update show_on_front 'page'
-      # set "Home" to be the new page
-      noroot wp option update page_on_front "$(noroot wp post list --post_type=page --post_status=publish --posts_per_page=1 --pagename=home --field=ID)"
-      # set "Blog" to be the new blogpage
-      noroot wp option update page_for_posts "$(noroot wp post list --post_type=page --post_status=publish --posts_per_page=1 --pagename=blog --field=ID)"
-      # Create a navigation bar
-      noroot wp menu create "Main\ Navigation"
-      # Add pages to navigation
-      IFS=" "
-      for pageid in $(noroot wp post list --order="ASC" --orderby="date" --post_type=page --post_status=publish --posts_per_page=-1 --field=ID --format=ids);
-      do
-        noroot wp menu item add-post main-navigation "$pageid"
-      done
-      # Assign navigation to primary location
-      noroot wp menu location assign main-navigation primary
-      # Remove default widgets from sidebar
-      widgetids=$(noroot wp widget list header-right --format=ids)
-      noroot wp widget delete $widgetids
-      # Create a category called "News" and set it as default
-      noroot wp term create category News
-      noroot wp option update default_category "$(noroot wp term list category --name=news --field=id)"
-      # update and add general options
-      noroot wp option update date_format 'j F Y'
-      noroot wp option update links_updated_date_format 'F j, Y g:i a'
-      noroot wp option update timezone_string 'America/New_York'
-      noroot wp option update permalink_structure '/%postname%/'
-      noroot wp option add rg_gforms_enable_akismet '1'
-      noroot wp option add rg_gforms_currency 'USD'
-      noroot wp option add acf_pro_license $ACFPROLICENSE
-      noroot wp option add wordpress_api_key $WORDPRESSAPIKEY
-      noroot wp option add rg_gforms_key $RGGFORMSKEY
-      echo " * Build defaults initiated"
-    fi
-  }
+  if [ ! -z "${INITIAL_BASE_SETUP}" ]; then
+    echo " * Installing workflow specific themes and plugins"
+    # install the themes and plugins that we do want
+    noroot wp theme install https://orangeblossommedia.com/obm/tools/genesis.3.3.3.zip --activate
+    noroot wp plugin install genesis-simple-edits
+    noroot wp plugin install https://orangeblossommedia.com/obm/tools/advanced-custom-fields-pro.zip --activate
+    noroot wp plugin install https://orangeblossommedia.com/obm/tools/gravityforms_2.4.21.3.zip --activate
+    echo " * Cleaning default settings and setting up pages/menus"
+    # delete sample post
+    noroot wp post delete "$(noroot wp post list --post_type=post --posts_per_page=1 --post_status=publish --postname="hello-world" --field=ID --format=ids)" --force
+    # delete sample page, and create homepage
+    noroot wp post delete "$(noroot wp post list --post_type=page --posts_per_page=1 --post_status=publish --pagename="sample-page" --field=ID --format=ids)" --force
+    # Add a comma separated list of pages
+    allpages="Home,About,Contact,Blog"
+    # create all of the pages
+    IFS=","
+    for page in $allpages
+    do
+      noroot wp post create --post_type=page --post_status=publish --post_author="$(noroot wp user get $wpuser --field=ID)" --post_title="$(echo $page | sed -e 's/^ *//' -e 's/ *$//')"
+    done
+    # set page as front page
+    noroot wp option update show_on_front 'page'
+    # set "Home" to be the new page
+    noroot wp option update page_on_front "$(noroot wp post list --post_type=page --post_status=publish --posts_per_page=1 --pagename=home --field=ID)"
+    # set "Blog" to be the new blogpage
+    noroot wp option update page_for_posts "$(noroot wp post list --post_type=page --post_status=publish --posts_per_page=1 --pagename=blog --field=ID)"
+    # Create a navigation bar
+    noroot wp menu create "Main\ Navigation"
+    # Add pages to navigation
+    IFS=" "
+    for pageid in $(noroot wp post list --order="ASC" --orderby="date" --post_type=page --post_status=publish --posts_per_page=-1 --field=ID --format=ids);
+    do
+      noroot wp menu item add-post main-navigation "$pageid"
+    done
+    # Assign navigation to primary location
+    noroot wp menu location assign main-navigation primary
+    # Remove default widgets from sidebar
+    widgetids=$(noroot wp widget list header-right --format=ids)
+    noroot wp widget delete $widgetids
+    # Create a category called "News" and set it as default
+    noroot wp term create category News
+    noroot wp option update default_category "$(noroot wp term list category --name=news --field=id)"
+    # update and add general options
+    noroot wp option update date_format 'j F Y'
+    noroot wp option update links_updated_date_format 'F j, Y g:i a'
+    noroot wp option update timezone_string 'America/New_York'
+    noroot wp option update permalink_structure '/%postname%/'
+    noroot wp option add rg_gforms_enable_akismet '1'
+    noroot wp option add rg_gforms_currency 'USD'
+    noroot wp option add acf_pro_license $ACFPROLICENSE
+    noroot wp option add wordpress_api_key $WORDPRESSAPIKEY
+    noroot wp option add rg_gforms_key $RGGFORMSKEY
+    echo " * Build defaults initiated"
+  fi
 }
 
 update_wp() {
