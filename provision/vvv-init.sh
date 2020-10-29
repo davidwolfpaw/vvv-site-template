@@ -189,12 +189,6 @@ install_wp() {
 
   INITIAL_BASE_SETUP=$(get_config_value 'initial_base_setup' "")
     if [ ! -z "${INITIAL_BASE_SETUP}" ]; then
-      echo " * Deleting default plugins and themes"
-      # delete the default plugins and themes that we don't need
-      noroot wp plugin delete hello
-      noroot wp theme delete twentyfifteen
-      noroot wp theme delete twentysixteen
-      noroot wp theme delete twentyseventeen
       echo " * Installing workflow specific themes and plugins"
       # install the themes and plugins that we do want
       noroot wp theme install https://orangeblossommedia.com/obm/tools/genesis.3.3.3.zip --activate
