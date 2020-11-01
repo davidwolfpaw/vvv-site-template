@@ -188,10 +188,10 @@ install_wp() {
   INITIAL_BASE_SETUP=$(get_config_value 'initial_base_setup' "")
   if [ ! -z "${INITIAL_BASE_SETUP}" ]; then
     # install the themes and plugins that we do want
-    # noroot wp theme install https://orangeblossommedia.com/obm/tools/genesis.3.3.3.zip --activate
-    # noroot wp plugin install genesis-simple-edits
-    # noroot wp plugin install https://orangeblossommedia.com/obm/tools/advanced-custom-fields-pro.zip --activate
-    # noroot wp plugin install https://orangeblossommedia.com/obm/tools/gravityforms_2.4.21.3.zip --activate
+    noroot wp theme install https://orangeblossommedia.com/obm/tools/genesis.3.3.3.zip --activate
+    noroot wp plugin install genesis-simple-edits
+    noroot wp plugin install https://orangeblossommedia.com/obm/tools/advanced-custom-fields-pro.zip --activate
+    noroot wp plugin install https://orangeblossommedia.com/obm/tools/gravityforms_2.4.21.3.zip --activate
     # # delete sample post
     # noroot wp post delete "$(noroot wp post list --post_type=post --posts_per_page=1 --post_status=publish --postname="hello-world" --field=ID --format=ids)" --force
     # # delete sample page, and create homepage
@@ -220,6 +220,7 @@ install_wp() {
     done
     # Assign navigation to primary location
     noroot wp menu location assign main-navigation primary
+
     # Remove default widgets from sidebars
     # widgetsheaderright=$(noroot wp widget list header-right --format=ids)
     # noroot wp widget delete $widgetsheaderright
@@ -227,6 +228,7 @@ install_wp() {
     # noroot wp widget delete $widgetsprimary
     # widgetssecondary=$(noroot wp widget list sidebar-alt --format=ids)
     # noroot wp widget delete $widgetssecondary
+
     # Create a category called "News" and set it as default
     noroot wp term create category News
     noroot wp option update default_category "$(noroot wp term list category --name=news --field=id)"
