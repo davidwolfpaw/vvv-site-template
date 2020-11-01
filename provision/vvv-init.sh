@@ -187,15 +187,15 @@ install_wp() {
 
   INITIAL_BASE_SETUP=$(get_config_value 'initial_base_setup' "")
   if [ ! -z "${INITIAL_BASE_SETUP}" ]; then
-    install the themes and plugins that we do want
-    noroot wp theme install https://orangeblossommedia.com/obm/tools/genesis.3.3.3.zip --activate
-    noroot wp plugin install genesis-simple-edits
-    noroot wp plugin install https://orangeblossommedia.com/obm/tools/advanced-custom-fields-pro.zip --activate
-    noroot wp plugin install https://orangeblossommedia.com/obm/tools/gravityforms_2.4.21.3.zip --activate
-    # delete sample post
-    noroot wp post delete "$(noroot wp post list --post_type=post --posts_per_page=1 --post_status=publish --postname="hello-world" --field=ID --format=ids)" --force
-    # delete sample page, and create homepage
-    noroot wp post delete "$(noroot wp post list --post_type=page --posts_per_page=1 --post_status=publish --pagename="sample-page" --field=ID --format=ids)" --force
+    # install the themes and plugins that we do want
+    # noroot wp theme install https://orangeblossommedia.com/obm/tools/genesis.3.3.3.zip --activate
+    # noroot wp plugin install genesis-simple-edits
+    # noroot wp plugin install https://orangeblossommedia.com/obm/tools/advanced-custom-fields-pro.zip --activate
+    # noroot wp plugin install https://orangeblossommedia.com/obm/tools/gravityforms_2.4.21.3.zip --activate
+    # # delete sample post
+    # noroot wp post delete "$(noroot wp post list --post_type=post --posts_per_page=1 --post_status=publish --postname="hello-world" --field=ID --format=ids)" --force
+    # # delete sample page, and create homepage
+    # noroot wp post delete "$(noroot wp post list --post_type=page --posts_per_page=1 --post_status=publish --pagename="sample-page" --field=ID --format=ids)" --force
     # Add a comma separated list of pages
     allpages="Home,About,Contact,Blog"
     # create all of the pages
