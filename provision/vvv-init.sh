@@ -222,12 +222,10 @@ install_wp() {
     noroot wp menu location assign main-navigation primary
 
     # Remove default widgets from sidebars
-    # widgetsheaderright=$(noroot wp widget list header-right --format=ids)
-    # noroot wp widget delete $widgetsheaderright
-    # widgetsprimary=$(noroot wp widget list sidebar --format=ids)
-    # noroot wp widget delete $widgetsprimary
-    # widgetssecondary=$(noroot wp widget list sidebar-alt --format=ids)
-    # noroot wp widget delete $widgetssecondary
+    widgetsprimary=$(noroot wp widget list sidebar-1 --format=ids)
+    noroot wp widget delete $widgetsprimary
+    widgetssecondary=$(noroot wp widget list sidebar-2 --format=ids)
+    noroot wp widget delete $widgetssecondary
 
     # Create a category called "News" and set it as default
     noroot wp term create category News
