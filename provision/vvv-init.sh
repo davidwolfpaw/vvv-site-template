@@ -218,19 +218,19 @@ install_wp() {
     do
       noroot wp menu item add-post main-navigation "$pageid"
     done
-    # # Assign navigation to primary location
-    # noroot wp menu location assign main-navigation primary
-    # # Remove default widgets from sidebars
-    # widgetsheaderright=$(noroot wp widget list header-right --format=ids)
-    # noroot wp widget delete $widgetsheaderright
-    # widgetsprimary=$(noroot wp widget list sidebar --format=ids)
-    # noroot wp widget delete $widgetsprimary
-    # widgetssecondary=$(noroot wp widget list sidebar-alt --format=ids)
-    # noroot wp widget delete $widgetssecondary
-    # # Create a category called "News" and set it as default
-    # noroot wp term create category News
-    # noroot wp option update default_category "$(noroot wp term list category --name=news --field=id)"
-    # # update and add general options
+    # Assign navigation to primary location
+    noroot wp menu location assign main-navigation primary
+    # Remove default widgets from sidebars
+    widgetsheaderright=$(noroot wp widget list header-right --format=ids)
+    noroot wp widget delete $widgetsheaderright
+    widgetsprimary=$(noroot wp widget list sidebar --format=ids)
+    noroot wp widget delete $widgetsprimary
+    widgetssecondary=$(noroot wp widget list sidebar-alt --format=ids)
+    noroot wp widget delete $widgetssecondary
+    # Create a category called "News" and set it as default
+    noroot wp term create category News
+    noroot wp option update default_category "$(noroot wp term list category --name=news --field=id)"
+    # update and add general options
     noroot wp option update date_format 'j F Y'
     noroot wp option update links_updated_date_format 'F j, Y g:i a'
     noroot wp option update timezone_string 'America/New_York'
